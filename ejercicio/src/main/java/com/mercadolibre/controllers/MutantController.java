@@ -99,9 +99,7 @@ public class MutantController {
 				for(int j=0; j < json.getAncho(i); j++) {
 					newSet.add( json.getDna()[i].charAt(j) );
 				}
-				if ((newSet.size() != 4) ||
-					!check.containsAll( newSet ) || 
-					!newSet.containsAll( check )) {
+				if (!check.containsAll( newSet )) {
 						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad value of dna, is not G A T or C");
 				}
 			}
