@@ -38,7 +38,7 @@ class MutantServicesTests {
 	}
 
 	@Test
-	void checkMatrixVerticalMutant(){
+	void checkMatrixVerticalMutantAndLastRowIsHorizontal(){
 		log.info(matrix);
 		matrix = new String[] {
 			"GTATAG",
@@ -46,17 +46,17 @@ class MutantServicesTests {
 			"AAGTAA",
 			"ATATGG",
 			"GGAATT",
-			"AATTGG"
+			"TTTTGG"
 		};
 		boolean result = service.isMutant(matrix);
 		assertTrue(result);
 	}
 
 	@Test
- void checkMatrixHorizontalMutant(){
+ void checkMatrixHorizontalAndVerticalMutant(){
 		String[] matrix1 = new String[] {
-			"GGATGA",
-			"TGGGTT",
+			"GAATGA",
+			"TAGGTT",
 			"AAGTAA",
 			"AAAAGG",
 			"GGAATT",
@@ -66,7 +66,7 @@ class MutantServicesTests {
 	}
 
 	@Test
-	void checkAll(){
+	void checkAllAIsNoValid(){
 		String[] matrix = new String[] {
 			"AAAAAA",
 			"AAAAAA",
@@ -81,12 +81,12 @@ class MutantServicesTests {
 	@Test
 	void diagonalDerecha(){
 		matrix = new String[] {
-			"GTATAG",
-			"TGGGTT",
-			"AAGTAA",
-			"AGTGGG",
-			"GGAATT",
-			"AATTGG"
+			"GTCTAG",
+			"TGACTT",
+			"CAGTAA",
+			"AGTGCG",
+			"GGAATC",
+			"CATTGG"
 		};
 		assertTrue(service.isMutant(matrix));
 	}
@@ -94,12 +94,12 @@ class MutantServicesTests {
 	@Test
 	void diagonalIzquierda(){
 		matrix = new String[] {
-			"GTATAG",
-			"ATGGTT",
-			"ATGAAA",
-			"AGTGGG",
-			"GAATTT",
-			"TATTGG"
+			"GCATGA",
+			"ATGAGC",
+			"AGTACA",
+			"TTCTCG",
+			"GCAGTT",
+			"CATTGG"
 		};
 		assertTrue(service.isMutant(matrix));
 	}
@@ -107,12 +107,12 @@ class MutantServicesTests {
 	@Test
 	void cruzEsPositivo(){
 		matrix = new String[] {
-			"GTATAG",
-			"TTGTTT",
-			"ATTAAA",
-			"ATTGGG",
-			"TAATTT",
-			"TATTGG"
+			"GTCTAG",
+			"TCGTTT",
+			"ACCCCA",
+			"ATCGCG",
+			"TACCTT",
+			"TACTGG"
 		};
 		assertTrue(service.isMutant(matrix));
 	}
