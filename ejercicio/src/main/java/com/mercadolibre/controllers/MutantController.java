@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,19 +36,19 @@ public class MutantController {
 	CacheService cache;
 
 		@PostMapping("/mutant")
-		public boolean isMutant(@RequestBody JsonReceive json) 
+		public ResponseEntity<Boolean> isMutant(@RequestBody JsonReceive json) 
 		throws  ResponseStatusException {
 
 			checkRequest(json);
 
 			if ( cache.stayInCache(json.getDna()) ) {
-				return cache.get( json.getDna() );
+				return response(cache.get( json.getDna() ));
 			}
 
 			List<Request> resultsInMongo = ejercicioItemRepo.findByDna( json.getDna() );
 			log.info("se consultara en mongo resultados");
 			if ( !resultsInMongo.isEmpty() && resultsInMongo.get(0).getResult() ){
-				return resultsInMongo.get(0).getResult();
+				return response(resultsInMongo.get(0).getResult());
 			}
  
 			boolean result = service.isMutant(json.getDna());
@@ -59,12 +60,20 @@ public class MutantController {
 			if( result ) {
 				cache.getCountMutantDna().incrementAndGet();
 				log.info("se actualizo la CACHE, el contador de mutantes");
-				return result;
+				return response(result);
 			} else {
 				cache.getCountHumanDna().incrementAndGet();
 				log.info("se actualizo la cache, el contador de humanos");
 			}
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "is not mutant");
+
+			return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
+		}
+
+		private ResponseEntity<Boolean> response(boolean result) {
+			if( result ) {
+				return new ResponseEntity<>(Boolean.valueOf(result), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
 		}
 
 		private void checkRequest(JsonReceive json) throws ResponseStatusException {
