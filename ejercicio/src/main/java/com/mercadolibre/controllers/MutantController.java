@@ -1,6 +1,7 @@
 package com.mercadolibre.controllers;
 
 import java.util.HashSet;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +40,16 @@ public class MutantController {
 
 			checkRequest(json);
 
+			if ( cache.stayInCache(json.getDna()) ) {
+				return cache.get( json.getDna() );
+			}
+
+			List<Request> resultsInMongo = ejercicioItemRepo.findByDna( json.getDna() );
+			log.info("se consultara en mongo resultados");
+			if ( !resultsInMongo.isEmpty() && resultsInMongo.get(0).getResult() ){
+				return resultsInMongo.get(0).getResult();
+			}
+ 
 			boolean result = service.isMutant(json.getDna());
 
 			cache.save(json.getDna(), result);
