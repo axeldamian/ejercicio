@@ -1,0 +1,11 @@
+name: docker
+services:
+  spring-app:
+    container_name: ejercicio
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    working_dir: "/app"
+  # command: -jar /var/run/jars/hello-world.jar

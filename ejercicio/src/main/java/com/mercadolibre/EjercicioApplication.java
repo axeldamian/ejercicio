@@ -12,10 +12,10 @@ public class EjercicioApplication {
 
 	private static final Logger log = LogManager.getLogger(EjercicioApplication.class);
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(EjercicioApplication.class, args);
 		log.info("Start Application");
+		log.info("do a request!");
 	}
 
 }
