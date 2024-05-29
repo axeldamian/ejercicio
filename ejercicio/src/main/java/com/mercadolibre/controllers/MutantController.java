@@ -57,14 +57,7 @@ public class MutantController {
 			log.info("se guardara el dato en MONGO");
 			ejercicioItemRepo.save(new Request(json.getDna(), result));
 			
-			if( result ) {
-				cache.getCountMutantDna().incrementAndGet();
-				log.info("se actualizo la CACHE, el contador de mutantes");
-				return response(result);
-			} else {
-				cache.getCountHumanDna().incrementAndGet();
-				log.info("se actualizo la cache, el contador de humanos");
-			}
+			updateCache(result);
 
 			return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
 		}
@@ -74,6 +67,18 @@ public class MutantController {
 				return new ResponseEntity<>(Boolean.valueOf(result), HttpStatus.OK);
 			}
 			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+		}
+
+		private ResponseEntity<Boolean> updateCache(boolean value) {
+			if( value ) {
+				cache.getCountMutantDna().incrementAndGet();
+				log.info("se actualizo la CACHE, el contador de mutantes");
+				return response(value);
+			} else {
+				cache.getCountHumanDna().incrementAndGet();
+				log.info("se actualizo la cache, el contador de humanos");
+				return response(false);
+			}
 		}
 
 		private void checkRequest(JsonReceive json) throws ResponseStatusException {
@@ -94,15 +99,18 @@ public class MutantController {
 			check.add('T');
 			check.add('C');
 			
+			HashSet<Character> newSet = new HashSet<Character>();
 			for(int i=0; i < json.getLargo(); i++) {
-				HashSet<Character> newSet = new HashSet<Character>();
 				for(int j=0; j < json.getAncho(i); j++) {
 					newSet.add( json.getDna()[i].charAt(j) );
 				}
-				if (!check.containsAll( newSet )) {
-						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad value of dna, is not G A T or C");
-				}
 			}
+
+			if (!newSet.equals(check) || !check.containsAll( newSet )) {
+				log.info("values of matrix are not G A T C " + newSet.toString());
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad value of dna, is not G A T or C");
+			}
+			
 		}
 
 		@PostConstruct
