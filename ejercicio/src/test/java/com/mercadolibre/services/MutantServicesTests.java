@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.mercadolibre.dtos.Status;
+
 @SpringBootTest
 class MutantServicesTests {
 
@@ -124,5 +126,47 @@ class MutantServicesTests {
 		service.isMutant(matrix);
 		});
 	}
+
+	@Test
+	void checkMatrixOfExampleNoMutant(){
+		matrix = new String[] {
+			"ATGCGA",
+			"CAGTGC",
+			"TTATTT",
+			"AGACGG",
+			"GCGTCA",
+			"TCACTG"
+		};
+		assertFalse(service.isMutant(matrix));
+	}
+
+	@Test
+	void checkMatrixOfExampleMutant(){
+		matrix = new String[] {
+			"ATGCGA",
+			"CAGTGC",
+			"TTATGT",
+			"AGAAGG",
+			"CCCCTA",
+			"TCACTG"
+		};
+		assertTrue(service.isMutant(matrix));
+	}
+
+	@Test
+	void checkStatus(){
+		  Status st = service.status(9, 18);
+		  assertEquals(st.getCountHumanDna(), 9);
+		  assertEquals(st.getCountMutantDna(), 18);
+		  assertEquals(st.getRatio(), 0.50);
+	   }
+
+	   @Test
+	   void checkOtherStatus(){
+			 Status st = service.status(9, 18);
+			 st.setCountHumanDna(10);
+			 st.setCountMutantDna(5);
+			 assertEquals(st.getRatio(), 2.00);
+		  }
 
 }

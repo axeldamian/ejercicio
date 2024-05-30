@@ -132,15 +132,14 @@ class MutantControllerTests {
 	}
 
 	@Test
-	void checkMatrixIsMutantWith5Equals(){
+	void checkMatrixIsMutantWith5EqualsIsMutant(){
 
 		String string1 = "TGACGA";
 		String string2 = "GTACAT";
-		String string3 = "GACGTG";
+		String string3 = "CCCCCT";
 		String string4 = "TGTCAT";
 		String string5 = "GACGAT";
 		String string6 = "TAGTAC";
-		String string7 = "ATGATC";
 
 		String[] array = new String[]{
 			string1,
@@ -148,15 +147,12 @@ class MutantControllerTests {
 			string3,
 			string4,
 			string5,
-			string6,
-			string7
+			string6
 		};
 	  
 		JsonReceive json = new JsonReceive();
 		json.setDna(array);
 
-		assertThrows(ResponseStatusException.class, ()->{
-			controller.isMutant(json);
-		});
+		assertEquals(HttpStatus.OK, controller.isMutant(json).getStatusCode() );
 	}
 }
