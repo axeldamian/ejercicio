@@ -10,27 +10,37 @@
 	</parent>
 	<groupId>com.mercadolibre</groupId>
 	<artifactId>ejercicio</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>ejercicio de MELI</name>
 	<description>Excercise project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	<dependencyManagement>
+		<dependencies>
+		  <dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>libraries-bom</artifactId>
+			<version>26.28.0</version>
+			<type>pom</type>
+			<scope>import</scope>
+		  </dependency>
+		</dependencies>
+	  </dependencyManagement>
 	<dependencies>
-			
-		
-			<dependency>
-				<groupId>org.mongodb</groupId>
-				<artifactId>mongodb-driver-sync</artifactId>
-				<version>4.11.2</version>
-			</dependency>
-
-			<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-data-mongodb</artifactId>
-				<version>3.2.5</version>
-			</dependency>
+<!--
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-sync</artifactId>
+			<version>4.11.2</version>
+		</dependency> 
+	-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+			<version>3.2.5</version>
+		</dependency>
 
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
@@ -103,6 +113,11 @@
 					 </deployables> -->
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>com.google.cloud.tools</groupId>
+					<artifactId>appengine-maven-plugin</artifactId>
+					<version>2.7.0</version>
+				 </plugin>
 				<plugin>
 					<groupId>com.google.cloud.tools</groupId>
 					<artifactId>endpoints-framework-maven-plugin</artifactId>

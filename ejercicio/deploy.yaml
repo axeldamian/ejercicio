@@ -2,3 +2,5 @@ runtime: java17
 env: standard
 resources:
   memory_gb: 2.0
+network:
+  session_affinity: true

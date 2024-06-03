@@ -1,5 +1,6 @@
 runtime: java
 env: flex
+service: springexample-424021
 #application: hello
 #version: 1
 runtime_config:
@@ -17,4 +18,4 @@ handlers:
 #  instances: 1
 env_variables:
   BUCKET_NAME: "example-gcs-bucket"
-service: "springexample"
+service_account: servicionuevo@springexample-424021.iam.gserviceaccount.com

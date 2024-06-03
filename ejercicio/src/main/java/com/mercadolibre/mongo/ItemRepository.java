@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.mercadolibre.dtos.Request;
 
+@Repository
 public interface ItemRepository extends MongoRepository<Request, String> {
 
     @Query("{dna:'?0'}")
