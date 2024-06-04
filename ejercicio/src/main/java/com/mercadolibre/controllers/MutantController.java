@@ -57,7 +57,11 @@ public class MutantController {
 			log.info("se guardara el dato en MONGO");
 			ejercicioItemRepo.save(new Request(json.getDna(), result));
 			
-			updateCache(result);
+			updateCacheCounters(result);
+
+			if ( result ) {
+				return new ResponseEntity<>(true, HttpStatus.OK);
+			}
 
 			return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
 		}
@@ -69,7 +73,7 @@ public class MutantController {
 			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
 		}
 
-		private ResponseEntity<Boolean> updateCache(boolean value) {
+		private ResponseEntity<Boolean> updateCacheCounters(boolean value) {
 			if( value ) {
 				cache.getCountMutantDna().incrementAndGet();
 				log.info("se actualizo la CACHE, el contador de mutantes");
