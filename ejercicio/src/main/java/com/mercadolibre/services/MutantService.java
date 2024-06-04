@@ -25,43 +25,44 @@ static Logger log = LogManager.getLogger(MutantService.class);
 				matrix[positionX+2][positionY] == (matrix[positionX+3][positionY]);
 	}
 	
-	private boolean chequearDiagonal(char[][] matrix, int positionX, int positionY) {
+	private boolean chequearDiagonalDerecha(char[][] matrix, int positionX, int positionY) {
 		return positionX+3 < matrix.length && positionY+3 < matrix.length &&
 				matrix[positionX][positionY] == (matrix[positionX+1][positionY+1]) &&
 				matrix[positionX+1][positionY+1] == (matrix[positionX+2][positionY+2]) &&
 				matrix[positionX+2][positionY+2] == (matrix[positionX+3][positionY+3]);
 	}
 
-	private boolean chequearOblicuosIzquierdo(char[][] matrix, int positionX, int positionY) {
-		return positionX-3 >=0 && positionY-3 >=0 &&
-				matrix[positionX][positionY] == matrix[positionX-1][positionY-1] &&
-				matrix[positionX-1][positionY-1] == matrix[positionX-2][positionY-2] &&
-				matrix[positionX-2][positionY-2] == matrix[positionX-3][positionY-3];
+	private boolean chequearDiagonalIzquierda(char[][] matrix, int positionX, int positionY) {
+		return  positionX+3 <= matrix.length && positionY-3 >=0 &&
+				positionX+2 <= matrix.length && positionY-2 >=0 &&
+				positionX+1 <= matrix.length && positionY-1 >=0 &&
+				matrix[positionX][positionY] == matrix[positionX+1][positionY-1] &&
+				matrix[positionX+1][positionY-1] == matrix[positionX+2][positionY-2] &&
+				matrix[positionX+2][positionY-2] == matrix[positionX+3][positionY-3];
 	}
 
 	public boolean isMutant(String[] dna) {
 		char[][] matrix = getMatrix(dna);
 		int contador = 0;
+
 		for(int i = 0; i < matrix.length; i++) {
 			for(int j = 0; j < matrix[0].length; j++) {
+
 				if( chequearHorizontal(matrix, i, j) ) {
 					contador = contador + 1;
 				}
+
 				if( chequearVertical(matrix, i , j) ) {
 					contador = contador + 1;
 				}
-				if( chequearDiagonal(matrix, i , j) ) {
+				if( chequearDiagonalDerecha(matrix, i , j) ) {
+					contador = contador + 1;
+				}
+
+				if( chequearDiagonalIzquierda(matrix, i, j) ){
 					contador = contador + 1;
 				}
 				
-			}
-		}
-
-		for(int k = matrix.length-4; k < matrix.length; k++) {
-			for (int l = matrix[0].length-4; l < matrix.length; l++) {
-				if ( chequearOblicuosIzquierdo(matrix, k, l) ) {
-					contador = contador + 1;
-				}
 			}
 		}
 
