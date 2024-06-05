@@ -111,7 +111,8 @@ public class MutantController {
 			}
 
 			if (!newSet.equals(check) || !check.containsAll( newSet )) {
-				log.info("values of matrix are not G A T C " + newSet.toString());
+				String msg = "values of matrix are not G A T C " + newSet.toString();
+				log.info(msg);
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad value of dna, is not G A T or C");
 			}
 			

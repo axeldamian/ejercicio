@@ -7,10 +7,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.javatuples.Sextet;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.mercadolibre.dtos.Status;
 
+@Component
 @Service
 public class CacheService {
     
@@ -34,10 +36,17 @@ public class CacheService {
         return result.booleanValue();
     }
 
-    public void save(String[] dna, boolean result){
+    public void save(String[] dna, boolean result) {
         Sextet<Integer, Integer, Integer, Integer, Integer, Integer> keySextet = valueOf(dna);
         dicc.putIfAbsent(keySextet, result);
         log.info("se guardo el dato en memoria CACHE");
+    }
+
+    public void resetAllData() {
+        setCountHumanDna(0);
+        setCountMutantDna(0);
+        dicc.clear();
+        log.info("se reinicio la memoria CACHE");
     }
 
     public AtomicInteger getCountHumanDna() {
