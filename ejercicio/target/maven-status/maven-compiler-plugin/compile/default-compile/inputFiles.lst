@@ -1,10 +1,12 @@
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/EjercicioApplication.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/dtos/JsonReceive.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/controllers/PingController.java
+/Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/controllers/ResetCacheController.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/controllers/StatusController.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/services/MutantService.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/controllers/MutantController.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/dtos/Request.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/dtos/Status.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/mongo/ItemRepository.java
+/Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/controllers/ResetMongoController.java
 /Users/axelarrondo/repo/ejercicio/ejercicio/src/main/java/com/mercadolibre/services/CacheService.java

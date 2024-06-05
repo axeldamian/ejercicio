@@ -1,6 +1,6 @@
 runtime: java
 env: flex
-service: springexample-424021
+service: nube
 #application: hello
 #version: 1
 runtime_config:
