@@ -1,10 +1,10 @@
 runtime: java
 env: flex
 main: target/ejercicio-0.0.1.jar
-service: nubel
+service: ejercicio-meli-dna
 #application: hello
 #version: 1
-entrypoint: "java -jar -noverify jercicio-0.0.1-SNAPSHOT.jar"
+entrypoint: "java -jar -noverify ejercicio-0.0.1.jar"
 runtime_config:
   operating_system: "ubuntu22"
   runtime_version: "21"
