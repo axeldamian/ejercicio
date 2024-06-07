@@ -2,12 +2,16 @@ package com.mercadolibre.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mercadolibre.dtos.Status;
 
 @Service
 public class MutantService {
+
+	@Value("${spring.data.mongodb.password}")
+	private final String passw = null;
 
 static Logger log = LogManager.getLogger(MutantService.class);
 	
@@ -33,15 +37,16 @@ static Logger log = LogManager.getLogger(MutantService.class);
 	}
 
 	private boolean chequearDiagonalIzquierda(char[][] matrix, int positionX, int positionY) {
-		return  positionX+3 <= matrix.length && positionY-3 >=0 &&
-				positionX+2 <= matrix.length && positionY-2 >=0 &&
-				positionX+1 <= matrix.length && positionY-1 >=0 &&
+		return  positionX+3 <= matrix.length-1 && positionY-3 >=0 &&
+				positionX+2 <= matrix.length-1 && positionY-2 >=0 &&
+				positionX+1 <= matrix.length-1 && positionY-1 >=0 &&
 				matrix[positionX][positionY] == matrix[positionX+1][positionY-1] &&
 				matrix[positionX+1][positionY-1] == matrix[positionX+2][positionY-2] &&
 				matrix[positionX+2][positionY-2] == matrix[positionX+3][positionY-3];
 	}
 
 	public boolean isMutant(String[] dna) {
+		log.info(passw);
 		char[][] matrix = getMatrix(dna);
 		int contador = 0;
 

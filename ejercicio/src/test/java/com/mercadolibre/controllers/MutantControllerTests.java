@@ -155,4 +155,32 @@ class MutantControllerTests {
 
 		assertEquals(HttpStatus.OK, controller.isMutant(json).getStatusCode() );
 	}
+
+
+	@Test
+	void checkAllAIsNoValid(){
+
+		String string1 = "AAAAAA";
+		String string2 = "AAAAAA";
+		String string3 = "AAAAAA";
+		String string4 = "AAAAAA";
+		String string5 = "AAAAAA";
+		String string6 = "AAAAAA";
+
+		String[] array = new String[]{
+			string1,
+			string2,
+			string3,
+			string4,
+			string5,
+			string6
+		};
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		assertThrows(ResponseStatusException.class, ()->{
+			controller.isMutant(json);
+		});
+	}
+
 }

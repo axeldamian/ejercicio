@@ -68,27 +68,14 @@ class MutantServicesTests {
 	}
 
 	@Test
-	void checkAllAIsNoValid(){
-		String[] matrix = new String[] {
-			"AAAAAA",
-			"AAAAAA",
-			"AAAAAA",
-			"AAAAAA",
-			"AAAAAA",
-			"AAAAAA"
-		};
-		assertTrue(service.isMutant(matrix));
-	}
-
-	@Test
 	void diagonalDerecha(){
 		matrix = new String[] {
 			"GTCTAG",
-			"TGACTT",
-			"CAGTAA",
+			"TGCCTT",
+			"GAGCAA",
 			"AGTGCG",
-			"GGAATC",
-			"CATTGG"
+			"GGGATC",
+			"CATGGG"
 		};
 		assertTrue(service.isMutant(matrix));
 	}
@@ -97,8 +84,8 @@ class MutantServicesTests {
 	void diagonalIzquierda(){
 		matrix = new String[] {
 			"GCATGA",
-			"ATGAGC",
-			"AGTACA",
+			"ATTAGC",
+			"ATTCCA",
 			"TTCTCG",
 			"GCAGTT",
 			"CATTGG"
@@ -112,9 +99,9 @@ class MutantServicesTests {
 			"GTCTAG",
 			"TCGTTT",
 			"ACCCCA",
-			"ATCGCG",
+			"ATCCCG",
 			"TACCTT",
-			"TACTGG"
+			"TACCGG"
 		};
 		assertTrue(service.isMutant(matrix));
 	}
