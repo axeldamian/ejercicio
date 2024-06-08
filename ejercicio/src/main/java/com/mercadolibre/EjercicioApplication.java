@@ -9,8 +9,6 @@ public class EjercicioApplication {
 
 	private static final Logger log = LogManager.getLogger(EjercicioApplication.class);
 
-	//@Value("${spring.data.mongodb.password}")
-	//private String pass;
 	public static void main(String[] args) {
 		SpringApplication.run(EjercicioApplication.class, args);
 		log.info(System.getenv("ENVIRONMENT_VAR"));
