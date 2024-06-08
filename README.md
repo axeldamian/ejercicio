@@ -24,7 +24,7 @@ Retorna 200 y true si es mutante, si no es retorna 403 y false.
 
  ```/stats``` Get ver las estadisticas.
 
-```/reset-cache``` y ```/reset-mongo``` POST con body vacio resetear mongo o cache a cero.
+```/reset-cache``` y ```/reset-db``` POST con body vacio resetear base o cache a cero.
 
 crear jar parados donde esta el pom.xml ```mvn clean package```
 se genera el .jar en target/
@@ -72,4 +72,4 @@ https://www.baeldung.com/spring-boot-actuators
 el archivo env.properties contiene propiedades que no quiero mostrar, se llama de application.propertiies.
 se ignora en .gitignore pero en este ejemplo lo subi.
 
-**el endpoint reset-mongo se debe llamar reset-db para que no sepan que uso mongodb.**
+**el endpoint reset-db se debe llamar así para que no sepan que base de datos uso.**
