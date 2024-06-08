@@ -10,7 +10,7 @@ import com.mercadolibre.dtos.Status;
 @Service
 public class MutantService {
 
-	@Value("${spring.data.mongodb.password}")
+	@Value("${spring.data.mongodb.uri}")
 	private final String passw = null;
 
 static Logger log = LogManager.getLogger(MutantService.class);
