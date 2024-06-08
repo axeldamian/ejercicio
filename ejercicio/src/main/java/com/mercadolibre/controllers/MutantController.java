@@ -87,7 +87,11 @@ public class MutantController {
 
 		private void checkRequest(JsonReceive json) throws ResponseStatusException {
 
-			if (json.getLargo() != 6 ){
+			if ( json.getDna() == null ) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "dna is null");
+			}
+
+			if (json.getLargo() != 6 ){	
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad size of dna entity, not is 6");
 			}
 
