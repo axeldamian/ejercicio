@@ -41,6 +41,22 @@ Una vez creado el .ar ejecutar afuera de /src
 hay que crear un app.yaml en el directorio donde esta el pom.xml, es el archivo de configuración de google app engine
  ```gcloud app deploy target/ejercicio-0.0.1.jar --appyaml=app.yaml```
 
+## Docker
+
+Ubicados donde esta el docker-compose.yml
+**Crear una imagen y ejecutar el docker-compose, orquestador de containers:**
+
+ ```docker compose up```
+
+ Se puede ver en Docker Desktop que hay un container en el puerto 8080 ejecutandose.
+ **Guardar el .tar de la imagen, ejecutar una terminal nueva:**
+ ```docker save ejercicio > ejercicio.tar```
+
+**Cargar la imagen:**
+ ```docker load < ejercicio.tar```
+
+ En Docker Desktop se verá la imagen cargada, hay que darle play para ejecutarla en un container.
+ 
  ## Otras cosas
 
 para usar google engine aparte se debe crear una cuenta de servicios y darle permisos porque Mongo Atlas es un servicio en la nube.
@@ -56,4 +72,4 @@ https://www.baeldung.com/spring-boot-actuators
 el archivo env.properties contiene propiedades que no quiero mostrar, se llama de application.propertiies.
 se ignora en .gitignore pero en este ejemplo lo subi.
 
-el endpoint reset-mongo se debe llamar reset-db para que no sepan que uso mongodb.
+**el endpoint reset-mongo se debe llamar reset-db para que no sepan que uso mongodb.**
