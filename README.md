@@ -43,6 +43,8 @@ hay que crear un app.yaml en el directorio donde esta el pom.xml, es el archivo 
 
  ## Otras cosas
 
+para usar google engine aparte se debe crear una cuenta de servicios y darle permisos porque Mongo Atlas es un servicio en la nube.
+
  Instale una dependencia llamada actuator que agrega endpoints útiles
  
 ```/actuator/env``` GET con body vacio devuelve propiedades
