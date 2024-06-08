@@ -1,3 +1,5 @@
-/src/main/resources/env.properties
-/.DS_Store
+src/main/resources/env.properties
+.DS_Store
 /src/.DS_Store
+*.jar
+/target/
