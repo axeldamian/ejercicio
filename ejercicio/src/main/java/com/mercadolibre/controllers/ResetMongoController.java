@@ -23,7 +23,7 @@ public class ResetMongoController {
 		this.ejercicioMongoItemRepo = ejercicioMongoItemRepo;
 	}
 
-    @PostMapping(value = "/reset-mongo", produces= MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/reset-db", produces= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> resetMongoDB() {
 		try{
 			ejercicioMongoItemRepo.deleteAll();
