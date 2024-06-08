@@ -45,5 +45,13 @@ hay que crear un app.yaml en el directorio donde esta el pom.xml, es el archivo 
 
  Instale una dependencia llamada actuator que agrega endpoints útiles
  
-```/actuator/env``` GET con body vacio
+```/actuator/env``` GET con body vacio devuelve propiedades
+
+ver más endpoints
+https://www.baeldung.com/spring-boot-actuators
  
+
+el archivo env.properties contiene propiedades que no quiero mostrar, se llama de application.propertiies.
+se ignora en .gitignore pero en este ejemplo lo subi.
+
+el endpoint reset-mongo se debe llamar reset-db para que no sepan que uso mongodb.
