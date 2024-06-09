@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.mercadolibre.dtos.JsonReceive;
 
@@ -73,9 +72,7 @@ class MutantControllerTests {
 	   JsonReceive json = new JsonReceive();
 	   json.setDna(array);
 
-	   assertThrows(ResponseStatusException.class, () -> {
-		controller.isMutant(json);
-	 });
+	   assertSame( true , controller.isMutant(json).getStatusCode() == HttpStatus.BAD_REQUEST );
 	}
 
 	@Test
@@ -97,9 +94,7 @@ class MutantControllerTests {
 
 	   JsonReceive json = new JsonReceive();
 	   json.setDna(array);
-	   assertThrows(ResponseStatusException.class, () -> {
-		   controller.isMutant(json);
-		});
+	   assertSame( true , controller.isMutant(json).getStatusCode() == HttpStatus.BAD_REQUEST );
 	}
 
 	@Test
@@ -125,10 +120,7 @@ class MutantControllerTests {
 	  
 		JsonReceive json = new JsonReceive();
 		json.setDna(array);
-
-		assertThrows(ResponseStatusException.class, ()->{
-			controller.isMutant(json);
-		});
+		assertSame( true ,  controller.isMutant(json).getStatusCode() == HttpStatus.BAD_REQUEST );
 	}
 
 	@Test
@@ -177,10 +169,7 @@ class MutantControllerTests {
 		};
 		JsonReceive json = new JsonReceive();
 		json.setDna(array);
-
-		assertThrows(ResponseStatusException.class, ()->{
-			controller.isMutant(json);
-		});
+		assertSame( true , controller.isMutant(json).getStatusCode() == HttpStatus.BAD_REQUEST );
 	}
 
 }
