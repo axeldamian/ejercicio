@@ -2,16 +2,12 @@ package com.mercadolibre.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mercadolibre.dtos.Status;
 
 @Service
 public class MutantService {
-
-	@Value("${spring.data.mongodb.uri}")
-	private final String passw = null;
 
 static Logger log = LogManager.getLogger(MutantService.class);
 	
@@ -46,7 +42,6 @@ static Logger log = LogManager.getLogger(MutantService.class);
 	}
 
 	public boolean isMutant(String[] dna) {
-		log.info(passw);
 		char[][] matrix = getMatrix(dna);
 		int contador = 0;
 
