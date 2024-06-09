@@ -1,5 +1,7 @@
-main/resources/env.properties
+#main/resources/env.properties
 .DS_Store
 *.jar
 target/
 **/.DS_Store
+Dockerfile
+docker-compose.yml
