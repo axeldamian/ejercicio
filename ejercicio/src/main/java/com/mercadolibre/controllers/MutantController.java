@@ -1,5 +1,7 @@
 package com.mercadolibre.controllers;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -36,10 +38,13 @@ public class MutantController {
 	CacheService cache;
 
 		@PostMapping("/mutant")
-		public ResponseEntity<Boolean> isMutant(@RequestBody JsonReceive json) 
-		throws  ResponseStatusException {
+		public ResponseEntity<String> isMutant(@RequestBody JsonReceive json) 
+		throws ResponseStatusException {
 
-			checkRequest(json);
+			ResponseEntity<String> checkRequest = checkRequest(json);
+			if( checkRequest.getStatusCode() == HttpStatus.BAD_REQUEST ) {
+				return checkRequest;
+			}
 
 			if ( cache.stayInCache(json.getDna()) ) {
 				return response(cache.get( json.getDna() ));
@@ -60,20 +65,20 @@ public class MutantController {
 			updateCacheCounters(result);
 
 			if ( result ) {
-				return new ResponseEntity<>(true, HttpStatus.OK);
+				return new ResponseEntity<String>("true", HttpStatus.OK);
 			}
 
-			return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>("false", HttpStatus.FORBIDDEN);
 		}
 
-		private ResponseEntity<Boolean> response(boolean result) {
+		private ResponseEntity<String> response(boolean result) {
 			if( result ) {
-				return new ResponseEntity<>(Boolean.valueOf(result), HttpStatus.OK);
+				return new ResponseEntity<>(String.valueOf(result), HttpStatus.OK);
 			}
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(String.valueOf(result), HttpStatus.FORBIDDEN);
 		}
 
-		private ResponseEntity<Boolean> updateCacheCounters(boolean value) {
+		private ResponseEntity<String> updateCacheCounters(boolean value) {
 			if( value ) {
 				cache.getCountMutantDna().incrementAndGet();
 				log.info("se actualizo la CACHE, el contador de mutantes");
@@ -85,19 +90,24 @@ public class MutantController {
 			}
 		}
 
-		private void checkRequest(JsonReceive json) throws ResponseStatusException {
+		private ResponseEntity<String> checkRequest(JsonReceive json) {
+			
+			ResponseEntity<String> checkContainsDna = checkContainsDna(json);
+			if ( checkContainsDna.getStatusCode() == HttpStatus.BAD_REQUEST ) {
+				return checkContainsDna;
+			}
 
 			if ( json.getDna() == null ) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "dna is null");
+				return new ResponseEntity<>("dna is null" , HttpStatus.BAD_REQUEST);
 			}
 
 			if (json.getLargo() != 6 ){	
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad size of dna entity, not is 6");
+				return new ResponseEntity<>("bad dna size, is not 6" , HttpStatus.BAD_REQUEST);
 			}
 
-			for(int r = 0; r < json.getLargo() ; r++) {
-				if ( json.getAncho(r) != 6) {
-					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad value of dna, not is 6");
+			for(int r = 0; r < 6 ; r++) {
+				if ( json.getDna()[r].length() != 6) {
+					return new ResponseEntity<>("bad value of row of dna, not is 6" , HttpStatus.BAD_REQUEST);
 				}
 			}
 
@@ -117,9 +127,23 @@ public class MutantController {
 			if (!newSet.equals(check) || !check.containsAll( newSet )) {
 				String msg = "values of matrix are not G A T C " + newSet.toString();
 				log.info(msg);
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad value of dna, is not G A T or C");
+				return new ResponseEntity<>("bad value of dna, is not G A T C" , HttpStatus.BAD_REQUEST);
 			}
-			
+
+			return new ResponseEntity<>("ok" , HttpStatus.OK);	
+		}
+
+		private ResponseEntity<String> checkContainsDna(JsonReceive json) {
+			List<Field> properties = Arrays.asList(json.getClass().getDeclaredFields());
+			for( Field property : properties ) {
+				log.info(property);
+				if( property.getName().equals("dna") ){
+					return new ResponseEntity<>("ok" , HttpStatus.OK);
+				}
+			}
+
+			log.info("no contains dna the request body json");
+			return new ResponseEntity<>("no contain a field called dna" , HttpStatus.BAD_REQUEST);
 		}
 
 		@PostConstruct

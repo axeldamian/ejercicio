@@ -48,7 +48,7 @@ class MutantControllerTests {
 		JsonReceive json = new JsonReceive();
 		json.setDna(array);
 
-		ResponseEntity<Boolean> result = controller.isMutant(json);
+		ResponseEntity<String> result = controller.isMutant(json);
 		assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
 	}
 
