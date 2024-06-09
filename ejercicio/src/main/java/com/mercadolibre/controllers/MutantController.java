@@ -98,7 +98,7 @@ public class MutantController {
 			}
 
 			if ( json.getDna() == null ) {
-				return new ResponseEntity<>("dna is null" , HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("dna is null or is not present" , HttpStatus.BAD_REQUEST);
 			}
 
 			if (json.getLargo() != 6 ){	
@@ -106,8 +106,8 @@ public class MutantController {
 			}
 
 			for(int r = 0; r < 6 ; r++) {
-				if ( json.getDna()[r].length() != 6) {
-					return new ResponseEntity<>("bad value of row of dna, not is 6" , HttpStatus.BAD_REQUEST);
+				if ( json.getDna()[r] == null || json.getDna()[r].length() != 6) {
+					return new ResponseEntity<>("bad value of row " + ( r + 1 ) + " of dna, not is 6 or is null" , HttpStatus.BAD_REQUEST);
 				}
 			}
 
