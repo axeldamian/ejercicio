@@ -65,7 +65,7 @@ public class MutantController {
 			updateCacheCounters(result);
 
 			if ( result ) {
-				return new ResponseEntity<String>("true", HttpStatus.OK);
+				return new ResponseEntity<>("true", HttpStatus.OK);
 			}
 
 			return new ResponseEntity<>("false", HttpStatus.FORBIDDEN);
@@ -101,18 +101,16 @@ public class MutantController {
 				return new ResponseEntity<>("dna is null or is not present" , HttpStatus.BAD_REQUEST);
 			}
 
+			for( int i = 0; i < json.getLargo() ; i++ ) {
+				if ( json.getDna()[i] == null ) {
+					return new ResponseEntity<>("bad value of row " + ( i + 1 ) + " of dna, is null" , HttpStatus.BAD_REQUEST);
+				}
+			}
+			
 			for ( int i = 0 ; i < json.getLargo() ; i++ ) {
 				if ( json.getLargo() != json.getDna()[i].length() ) {
 					return new ResponseEntity<>("bad dna size, is not a square matrix" , HttpStatus.BAD_REQUEST);
 				}
-			}
-
-			for( int i = 0; i < json.getLargo() ; i++ ) {
-				log.info(i);
-				//log.info(json.getDna()[i]);
-				//if ( json.getDna()[i] == null ) {
-				//	return new ResponseEntity<>("bad value of row " + ( i + 1 ) + " of dna, is null" , HttpStatus.BAD_REQUEST);
-				//}
 			}
 
 			HashSet<Character> check = new HashSet<Character>();

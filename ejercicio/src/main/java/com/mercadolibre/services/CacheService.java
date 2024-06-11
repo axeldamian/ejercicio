@@ -16,8 +16,6 @@ import com.mercadolibre.dtos.Status;
 public class CacheService {
     
     Logger log = LogManager.getLogger(CacheService.class);
-
-    //private ConcurrentHashMap< Sextet<Integer, Integer, Integer, Integer, Integer, Integer> , Boolean> dicc = new ConcurrentHashMap<>();
     
     private ConcurrentHashMap< Integer[] , Boolean > dicc = new ConcurrentHashMap<>();
 
