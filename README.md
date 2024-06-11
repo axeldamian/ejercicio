@@ -4,7 +4,7 @@
 
 ```/mutant``` Post
 
-Body json de ejemplo
+Body json de ejemplo, las posibles matrices a ingresar son cuadradas con letras G A T C la matriz entera debe contener esas letras sino devuelve 400 en otro caso.
 
 ```
 {
