@@ -73,3 +73,8 @@ el archivo env.properties contiene propiedades que no quiero mostrar, se llama d
 se ignora en .gitignore pero en este ejemplo lo subi.
 
 **el endpoint reset-db se debe llamar así para que no sepan que base de datos uso.**
+
+## Logs en google app engine de la aplicación
+
+```gcloud app browse -s ejercicio-meli-dna```
+
