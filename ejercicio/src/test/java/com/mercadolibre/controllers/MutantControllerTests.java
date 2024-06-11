@@ -172,4 +172,174 @@ class MutantControllerTests {
 		assertSame( true , controller.isMutant(json).getStatusCode() == HttpStatus.BAD_REQUEST );
 	}
 
+	@Test
+	void checkMatrixNoMutantOfSize4(){
+
+		String string1 = "TGAC";
+		String string2 = "GTAC";
+		String string3 = "GACG";
+		String string4 = "TGTC";
+
+		String[] array = new String[]{
+			string1,
+			string2,
+			string3,
+			string4
+		};
+	  
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+	}
+
+	@Test
+	void checkMatrixNoMutantOfSize3(){
+
+		String string1 = "TGA";
+		String string2 = "GTA";
+		String string3 = "GAC";
+
+		String[] array = new String[]{
+			string1,
+			string2,
+			string3
+		};
+	  
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+	}
+
+	@Test
+	void checkMatrixNoMutantOfSize2(){
+
+		String string1 = "TG";
+		String string2 = "AC";
+
+		String[] array = new String[]{
+			string1,
+			string2
+		};
+	  
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+	}
+
+	@Test
+	void checkMatrixOfSize1Returns400(){
+
+		String string1 = "T";
+		String[] array = new String[]{
+			string1
+		};
+	  
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+	}
+
+	@Test
+	void checkMatrixNotSquare(){
+
+		String string1 = "TGA";
+		String string2 = "GTA";
+		String string3 = "GAC";
+		String string4 = "TGT";
+
+		String[] array = new String[]{
+			string1,
+			string2,
+			string3,
+			string4
+		};
+	  
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+	}
+
+	@Test
+	void checkMatrixNotSquare2(){
+
+		String string1 = "TGAC";
+		String string2 = "GTAC";
+		String string3 = "GACG";
+
+		String[] array = new String[]{
+			string1,
+			string2,
+			string3
+		};
+	  
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+	}
+
+	@Test
+	void checkMatrixContainsANull(){
+
+		String string1 = "TGAC";
+		String string2 = null;
+		String string3 = "GACG";
+		String string4 = "TGTC";
+
+		String[] array = new String[]{
+			string1,
+			string2,
+			string3,
+			string4
+		};
+	  
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+	}
+
+	@Test
+	void checkMatrixWithAEmptyString(){
+
+		String string1 = "TGAC";
+		String string2 = "GTAC";
+		String string3 = "";
+		String string4 = "TGTC";
+
+		String[] array = new String[]{
+			string1,
+			string2,
+			string3,
+			string4
+		};
+	  
+		JsonReceive json = new JsonReceive();
+		json.setDna(array);
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+	}
+
+	@Test
+	void checkMatrixWithoutDna(){
+	  
+		JsonReceive json = new JsonReceive();
+
+		ResponseEntity<String> result = controller.isMutant(json);
+		assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+	}
+
 }
