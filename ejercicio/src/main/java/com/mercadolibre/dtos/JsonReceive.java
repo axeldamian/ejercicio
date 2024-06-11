@@ -18,7 +18,7 @@ static Logger log = LogManager.getLogger(JsonReceive.class);
     }
 
     public int getLargo(){
-        return dna.length;
+        return this.dna.length;
     }
 
     public int getAncho(int index){

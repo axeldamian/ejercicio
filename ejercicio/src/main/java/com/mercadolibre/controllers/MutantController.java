@@ -101,14 +101,18 @@ public class MutantController {
 				return new ResponseEntity<>("dna is null or is not present" , HttpStatus.BAD_REQUEST);
 			}
 
-			if (json.getLargo() != 6 ){	
-				return new ResponseEntity<>("bad dna size, is not 6" , HttpStatus.BAD_REQUEST);
+			for ( int i = 0 ; i < json.getLargo() ; i++ ) {
+				if ( json.getLargo() != json.getDna()[i].length() ) {
+					return new ResponseEntity<>("bad dna size, is not a square matrix" , HttpStatus.BAD_REQUEST);
+				}
 			}
 
-			for(int r = 0; r < 6 ; r++) {
-				if ( json.getDna()[r] == null || json.getDna()[r].length() != 6) {
-					return new ResponseEntity<>("bad value of row " + ( r + 1 ) + " of dna, not is 6 or is null" , HttpStatus.BAD_REQUEST);
-				}
+			for( int i = 0; i < json.getLargo() ; i++ ) {
+				log.info(i);
+				//log.info(json.getDna()[i]);
+				//if ( json.getDna()[i] == null ) {
+				//	return new ResponseEntity<>("bad value of row " + ( i + 1 ) + " of dna, is null" , HttpStatus.BAD_REQUEST);
+				//}
 			}
 
 			HashSet<Character> check = new HashSet<Character>();
@@ -136,7 +140,6 @@ public class MutantController {
 		private ResponseEntity<String> checkContainsDna(JsonReceive json) {
 			List<Field> properties = Arrays.asList(json.getClass().getDeclaredFields());
 			for( Field property : properties ) {
-				log.info(property);
 				if( property.getName().equals("dna") ){
 					return new ResponseEntity<>("ok" , HttpStatus.OK);
 				}

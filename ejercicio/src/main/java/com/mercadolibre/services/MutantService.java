@@ -46,7 +46,7 @@ static Logger log = LogManager.getLogger(MutantService.class);
 		int contador = 0;
 
 		for(int i = 0; i < matrix.length; i++) {
-			for(int j = 0; j < matrix[0].length; j++) {
+			for(int j = 0; j < matrix.length; j++) {
 
 				if( chequearHorizontal(matrix, i, j) ) {
 					contador = contador + 1;
@@ -82,10 +82,10 @@ static Logger log = LogManager.getLogger(MutantService.class);
 
 
 		private char[][] getMatrix(String[] dna){
-			char[][] matrix = new char[6][6];
-			for(int i = 0 ; i < 6; i++){
+			char[][] matrix = new char[dna.length][dna.length];
+			for(int i = 0 ; i < dna.length; i++){
 				char[] arr = dna[i].toCharArray();
-				for(int j = 0; j < 6; j++){
+				for(int j = 0; j < dna.length; j++){
 					matrix[i][j] =  arr[j];
 				}
 			}
