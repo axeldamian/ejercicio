@@ -56,14 +56,4 @@ public class Status {
         this.countMutantDna = new AtomicInteger(mutantDna);
     }
 
-    @Override
-    public String toString() {
-        super.toString();
-        String s = "{ ";
-        s = s + "count_human_dna:" + this.getCountHumanDna() + ",";
-        s = s + "count_mutant_dna:" + this.getCountMutantDna() + ",";
-        s = s + "ratio:" + this.getRatio() + " }";
-        return s;
-    }
-
 }

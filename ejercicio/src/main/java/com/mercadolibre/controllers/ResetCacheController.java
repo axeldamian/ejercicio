@@ -30,8 +30,6 @@ public class ResetCacheController {
 		try{
 			cacheService.resetAllData();
 		} catch ( Exception e ) {
-			log.info(e.getMessage());
-			e.printStackTrace();
 			return new ResponseEntity<>(stat, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(stat, HttpStatus.OK);

@@ -23,9 +23,10 @@ public class CacheService {
 
     private AtomicInteger countMutantDna = new AtomicInteger(0);
 
-    public boolean stayInCache(String[] dna){
+    public boolean stayInCache(final String[] dna){
+        final Integer[] k = valueOf(dna);
         log.info("consulta a la memoria CACHE");
-        return dicc.containsKey(valueOf(dna));
+        return dicc.containsKey(k);
     }
 
     public boolean get(String[] dna){
