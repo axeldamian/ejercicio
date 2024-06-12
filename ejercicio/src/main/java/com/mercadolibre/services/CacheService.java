@@ -17,27 +17,27 @@ public class CacheService {
     
     Logger log = LogManager.getLogger(CacheService.class);
     
-    private ConcurrentHashMap< Integer[] , Boolean > dicc = new ConcurrentHashMap<>();
+    private ConcurrentHashMap< String , Boolean > dicc = new ConcurrentHashMap<>();
 
     private AtomicInteger countHumanDna = new AtomicInteger(0);
 
     private AtomicInteger countMutantDna = new AtomicInteger(0);
 
     public boolean stayInCache(final String[] dna){
-        final Integer[] k = valueOf(dna);
+        String k = valueOf(dna);
         log.info("consulta a la memoria CACHE");
         return dicc.containsKey(k);
     }
 
     public boolean get(String[] dna){
-        Integer[] k = valueOf(dna);
+        String k = valueOf(dna);
         Boolean result = dicc.get(k);
         log.info("se recupero el resultado de la CACHE");
         return result.booleanValue();
     }
 
     public void save(String[] dna, boolean result) {
-        Integer[] key = valueOf(dna);
+        String key = valueOf(dna);
         dicc.putIfAbsent(key, result);
         log.info("se guardo el dato en memoria CACHE");
     }
@@ -72,7 +72,7 @@ public class CacheService {
         return status;
     }
 
-    private Integer[] valueOf(String[] dna) {
+    private String valueOf(String[] dna) {
 
         HashMap<Character, Integer> values = new HashMap<>();
         values.put('A', 1);
@@ -94,6 +94,15 @@ public class CacheService {
             }
             array[i] = Integer.valueOf(h);
         }
-        return array;
+        log.info(intToChar(array));
+        return intToChar(array);
+    }
+
+    private String intToChar(Integer[] array) {
+        String acum = "";
+        for ( int i = 0; i < array.length; i++ ) {
+            acum = acum + ( (char)(array[i] + '0') );
+        }
+        return acum;
     }
 }

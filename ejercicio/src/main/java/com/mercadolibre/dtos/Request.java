@@ -9,7 +9,7 @@ public class Request {
 
     private boolean result;
 
-    public Request(String[] dna,boolean result){
+    public Request(String[] dna, boolean result){
         this.dna = dna;
         this.result = result;
     }

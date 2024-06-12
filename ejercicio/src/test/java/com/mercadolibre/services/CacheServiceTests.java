@@ -13,12 +13,19 @@ class CacheServiceTests {
     CacheService service;
 
     @Test
-    void testingCache(){
+    void testingCache() {
         String[] dna = {"AGT","CGT","CGT"};
         service.save( dna , true);
         if ( service.stayInCache(dna) ) {
-            assertTrue(service.get(dna));
+         assertTrue(service.get(dna));
         }
+    }
+
+    @Test
+    void resetCache(){
+        service.resetAllData();
+        assertTrue( service.getCountHumanDna().get() == service.getCountMutantDna().get() );
+        assertEquals( 0, service.getCountHumanDna().get() );
     }
     
 }
