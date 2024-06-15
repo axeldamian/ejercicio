@@ -27,14 +27,14 @@ class CacheConcurrentTests extends Thread {
     private void addDnaToCache() {
         JsonReceive json = getJson();
         cache.save(json.getDna(), false);
-        integerConcurrent.incrementAndGet();
         log.info("added dna");
     }
 
     @Test
     void testingconcurrency() throws InterruptedException {
-        AtomicInteger integerConc = new AtomicInteger(0);
+        
         Thread[] threads = new Thread[THREAD_COUNT];
+        int real = 0;
     
         JsonReceive json = getJson();
 
@@ -43,27 +43,35 @@ class CacheConcurrentTests extends Thread {
         } );
 
         threads[0].start(); // inicializo el primer hilo, que agrega dna.
+        threads[0].join(); // espero que termine el 1er hilo, antes de ejecutar otra linea.
 
         for (int i = 1; i < THREAD_COUNT; i++) {
                 threads[i] = new Thread( () -> {
                     String[] dna = json.getDna();
                     if( cache.stayInCache(dna) ){
-                        integerConc.incrementAndGet();
+                        integerConcurrent.incrementAndGet(); // incremento en 1 el entero concurrente.
                     }
             });
             threads[i].start(); // inicializo los siguientes 9 hilos.
         }
 
         try {
-            for (int i = 0; i < THREAD_COUNT; i++) {
-                threads[i].join();
+            for ( Thread thread : threads ) {
+                if ( thread.getState() == State.TERMINATED || thread.getState() == State.RUNNABLE ){
+                    real = real + 1; // si el estado del thread actual es terminado o ejecutando incremento en 1 real, que es int comun.
+                }
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        assertTrue( integerConc.get() > 2 ); // el hilo que agrega el dna y otro mas.
+        for (int i = 1; i < THREAD_COUNT; i++) {
+            threads[i].join();
+        }
 
+        assertTrue( 0 <= real && real <= 10 ); // real son hilos terminados, debe ser siempre menor igual a 10.
+        assertSame(10, real);
+        assertSame(9, integerConcurrent.get()); // chequeo que pertenece el dna a la cache, ya que el primero solo agrega el dna.
     }
 
     @Test
@@ -71,6 +79,53 @@ class CacheConcurrentTests extends Thread {
         JsonReceive json = getJson();
         cache.save(json.getDna(), false);
         assertTrue( cache.stayInCache( json.getDna() ) );
+    }
+
+    @Test
+    void testingAnotherConcurrency() throws InterruptedException {
+
+        Thread[] threads = new Thread[3];
+
+        threads[0] = new Thread( () -> {
+            String[] array = buildArray("GAT","ATC","CCC");
+            cache.save(array, true);
+        } );
+
+        threads[1] = new Thread( () -> {
+            String[] array = buildArray("GGG","ATC","CCC");
+            cache.save(array, true);
+        } );
+
+        threads[2] = new Thread( () -> {
+            String[] array = buildArray("GTC","ATC","CCC");
+            cache.save(array, true);
+        } );
+
+        threads[0].start();
+        threads[1].start();
+        threads[2].start();
+
+        cache.setCountHumanDna(0);
+        cache.setCountMutantDna(3);
+
+        threads[0].join();
+        threads[1].join();
+        threads[2].join();
+
+       assertTrue( cache.stayInCache( new String[]{ "GAT", "ATC", "CCC"} ) );
+       assertTrue( cache.stayInCache( new String[]{ "GGG", "ATC", "CCC"}) );
+       assertTrue( cache.stayInCache( new String[]{ "GTC", "ATC", "CCC"}) );
+    }
+
+    private String[] buildArray(String string1, String string2, String string3){
+
+        String[] array = new String[]{
+			string1,
+			string2,
+			string3,
+           };
+
+           return array;
     }
 
     private JsonReceive getJson() {
